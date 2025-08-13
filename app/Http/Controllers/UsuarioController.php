@@ -19,6 +19,7 @@ class UsuarioController extends Controller
 
         $dados['password'] = bcrypt($dados['password']);
         $dados['status'] = 'active';
+        $dados['picture'] = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtRs_rWILOMx5-v3aXwJu7LWUhnPceiKvvDg&s';
         $dados['enabled'] = true;
 
         $usuario = User::create($dados);
