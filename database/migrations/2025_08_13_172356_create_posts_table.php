@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('data', 255);
             $table->string('description', 255);
-            $table->string('picure', 255);
+            $table->string('picture', 255);
+        });
+
+        Schema::table('users', function (Blueprint $table){
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -25,6 +29,12 @@ return new class extends Migration
      */
     public function down(): void
     {
+
+        Schema::table('users', function(Blueprint $table){
+            $table->dropForeign('posts_user_id_foreign');
+            $table->dropColumn('user_id');
+        });
+
         Schema::dropIfExists('posts');
     }
 };
