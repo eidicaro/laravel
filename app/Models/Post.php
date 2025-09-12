@@ -14,12 +14,6 @@ class Post extends Model
         'id',
         'description',
         'picture',
-        'user_id'
     ];
 
-    public function users()
-    {
-        return $this->belongsTo(User::class);
-        // Pertence a um user
-    }
 }

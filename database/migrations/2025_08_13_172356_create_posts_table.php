@@ -17,11 +17,6 @@ return new class extends Migration
             $table->string('description', 255);
             $table->string('picture', 255);
         });
-
-        Schema::table('users', function (Blueprint $table){
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-        });
     }
 
     /**
