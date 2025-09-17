@@ -3,6 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\UsuarioController;
+
+use App\Http\Controllers\PostController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -32,3 +36,11 @@ Route::prefix('post')->group(function(){
     Route::post('create', [App\Http\Controllers\PostController::class, 'create']);
    
 });
+
+// Route::middleware('auth:sanctum')->group(function () {
+//     Route::get('/posts', [PostController::class, 'index']);
+//     Route::post('/posts', [PostController::class, 'store']);
+// });
+
+Route::get('/posts', [PostController::class, 'index']);
+Route::post('/posts', [PostController::class, 'store']);

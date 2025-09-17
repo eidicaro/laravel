@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        return Post::orderBy('created_at', 'desc')->get();
     }
 
     /**
@@ -40,10 +40,25 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'user_name' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'content' => 'required|string',
+            'picture' => 'nullable|string|max:255',
+        ]);
+
+        $post = Post::create([
+            'user_name' => $request->user_name ?? 'Anônimo',
+            'description' => $request->description,
+            'content' => $request->content,
+            'picture' => $request->picture,
+        ]);
+
+        return response()->json($post, 201);
     }
+
 
     /**
      * Display the specified resource.

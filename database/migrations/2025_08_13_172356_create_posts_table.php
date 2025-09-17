@@ -6,30 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->string('user_name')->nullable(); // para identificar quem postou
+            $table->string('description')->nullable();
+            $table->string('picture')->nullable();
+            $table->text('content')->nullable();
             $table->timestamps();
-            $table->string('description', 255);
-            $table->string('picture', 255);
         });
+        
     }
+    
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-
-        Schema::table('users', function(Blueprint $table){
-            $table->dropForeign('posts_user_id_foreign');
-            $table->dropColumn('user_id');
-        });
-
         Schema::dropIfExists('posts');
     }
 };
