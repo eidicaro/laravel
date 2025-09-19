@@ -5,6 +5,8 @@
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class UsuarioController extends Controller
 {
@@ -38,32 +40,19 @@ class UsuarioController extends Controller
         ], 201);
     }
 
-    function login(Request $request)
+    public function login(Request $request)
     {
-		    //Validando os Dados
-        $credenciais = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
-
-				//Fazendo o Select no SQL
-        $usuario = User::where('email', $credenciais['email'])->first();
-
-				//Verificando a hash da senha do usuário
-        if (!$usuario || !\Hash::check($credenciais['password'], $usuario->password)) {
-            return response()->json(['message' => 'Credenciais inválidas'], 401);
+        $credentials = $request->only('email', 'password');
+    
+        if (!Auth::attempt($credentials)) {
+            return response()->json(['error' => 'Credenciais inválidas'], 401);
         }
-
-				//Gerando um token de acesso para o usuário
-        $token = $usuario->createToken('auth_token')->plainTextToken;
-
-				//Enviando todos os dados para o front-end
-        return response()->json([
-            'message' => 'Login realizado com sucesso.',
-            'user' => $usuario,
-            'token' => $token
-        ]);
+    
+        $user = Auth::user();
+    
+        return response()->json($user);
     }
+    
 
 
     function logout(Request $request)
