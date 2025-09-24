@@ -16,6 +16,7 @@ class PostController extends Controller
     public function index()
     {
         return Post::orderBy('created_at', 'desc')->get();
+        // mostra todos os posts
     }
 
     /**
